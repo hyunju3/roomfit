@@ -159,7 +159,8 @@ const OT={door:'여닫이 문',slide:'슬라이딩 문',window:'창문',outlet:'
 const WALLS={N:'위쪽 벽',E:'오른쪽 벽',S:'아래쪽 벽',W:'왼쪽 벽'};
 const WALLPAPERS={white:{n:'화이트',c:'#F7F5F0'},sage:{n:'세이지 리프',c:'#DCE6DE'},stripe:{n:'스트라이프',c:'#EFE7DA'},terra:{n:'테라코타',c:'#C9876A'},navy:{n:'네이비',c:'#3E4C63'},dots:{n:'도트',c:'#F2EBE0'},check:{n:'체크',c:'#EEF0F2'},beige:{n:'베이지 실크',c:'#E9DFCF'}};
 const FLOORS={oak:{n:'오크 마루',c:'#D6B994'},walnut:{n:'월넛 마루',c:'#8B6748'},herring:{n:'헤링본',c:'#CDAE85'},tile:{n:'화이트 타일',c:'#E9E6E0'},marble:{n:'대리석',c:'#F1EFEC'},deco:{n:'데코타일',c:'#BFB8AC'},lino:{n:'장판',c:'#E3D2B0'},gray:{n:'그레이 타일',c:'#B9B6AF'}};
-const ROLLS={silk:{n:'실크 (106cm × 15.6m)',w:106,l:1560},wide:{n:'광폭 합지 (93cm × 17.75m)',w:93,l:1775},narrow:{n:'소폭 합지 (53cm × 12.5m)',w:53,l:1250},custom:{n:'직접 입력',w:100,l:1000}};
+const ROLLS={silk:{n:'실크 (106cm × 15.6m)',w:106,l:1560,kind:'silk',ov:0},wide:{n:'광폭 합지 (93cm × 17.75m)',w:93,l:1775,kind:'hapji',ov:1},narrow:{n:'소폭 합지 (53cm × 12.5m)',w:53,l:1250,kind:'hapji',ov:1},sticker:{n:'스티커·접착식 (예: 50cm × 10m)',w:50,l:1000,kind:'sticker',ov:1},custom:{n:'직접 입력',w:100,l:1000,kind:'hapji',ov:0}};
+const KINDS={silk:'실크(풀 시공)',hapji:'합지(풀 시공)',sticker:'스티커·접착식'};
 const DIRS={0:'북',45:'북동',90:'동',135:'남동',180:'남',225:'남서',270:'서',315:'북서'};
 const SEASONS={spring:{n:'봄',d:80},summer:{n:'여름',d:172},autumn:{n:'가을',d:266},winter:{n:'겨울',d:355}};
 
@@ -176,7 +177,7 @@ const GUIDES=[
  {id:'3d',tab:'3d',title:'3D · 벽지 · 바닥재',steps:['화면을 끌면 방이 돌아가요. 각도 슬라이더로 위에서 보는 정도를 바꿔요.','<b>벽 잘라보기</b>를 낮추면 벽이 잘려서 방 안이 잘 보여요.','벽을 고르고 벽지를 누르면 그 벽에만 발라져요. <b>모든 벽에 적용</b>도 있어요.','📷 를 누르면 내 사진을 벽지·바닥재로 쓸 수 있어요.','<b>무늬 크기</b>에 실제 벽지 무늬(또는 사진 한 장)의 가로·세로 cm를 넣으면 그 크기로 반복돼요.','<b>이미지로</b>를 누르면 그림이 나와요. 길게 눌러 저장하세요.']},
  {id:'check',tab:'check',title:'점검 · 동선 · 콘센트 · 햇빛 · 빈 자리',steps:['<b>문제</b>: 겹침, 가구 문이 열릴 자리, 방문 앞, 창문 가림, 좁은 통로를 찾아요. 누르면 그 가구로 가요.','<b>동선</b>: 방문에서 각 가구 앞까지 걸어갈 길을 그려요. 초록 60cm 이상, 주황 45~60cm, 빨강은 못 가요.','<b>콘센트</b>: 전기 쓰는 가구에서 가장 가까운 콘센트까지 거리를 재요. 1.5m가 넘으면 멀티탭 길이를 알려줘요.','<b>햇빛</b>: 창문 방향과 계절·시간을 고르면 바닥에 해가 드는 곳을 그려요. 창문 방향은 처음 한 번만 정하면 돼요.','<b>빈 자리</b>: 평면의 빈 곳을 누르면 들어갈 수 있는 최대 크기와, 내 가구 중 들어가는 것을 알려줘요.']},
  {id:'calc',tab:'tools',title:'벽지 · 바닥재 계산기',steps:['<b>도구</b> 탭의 벽지 계산기에서 롤 규격(실크 106cm, 합지 93cm 등)을 고르세요.','무늬 반복 길이(무지면 0)와 계산할 벽을 고르면 필요한 롤 수가 나와요.','문·창문 빼기를 켜면 면적에서 빠져요. 로스(여유분)도 바꿀 수 있어요.','<b>직접 입력</b>을 고르면 방과 상관없이 벽 길이·높이를 넣어 계산해요.','바닥재 계산기는 마루·장판·타일 종류별로 필요한 면적, 장 수, 길이를 알려줘요.']},
- {id:'hang',tab:'tools',also:['3d'],title:'벽지 붙이기 · 전개도 · 재단표',steps:['<b>도구</b> 탭의 벽지 계산기에서 롤 규격과 무늬 반복 길이를 먼저 맞춰요.','<b>최소 사용</b>은 자투리를 최대한 다시 써서 롤을 아끼고, <b>깔끔하게</b>는 창문 가운데에 맞추고 좁은 조각을 없애요. 버튼에 두 방식의 롤 수가 같이 나와요.','<b>전개도</b>에서 벽마다 폭 번호, 이음매(빨간 선), 첫 수직선(파란 점선)을 봐요. 분홍 폭은 15cm보다 좁은 조각이에요.','<b>재단표</b>대로 롤마다 잘라서 뒷면에 번호를 적어두면 순서가 안 헷갈려요.','<b>붙이는 순서 보기</b>를 누르면 준비부터 마무리까지 9단계가 그림과 체크리스트로 나와요.','문 쪽 벽을 마지막에 붙이도록 순서를 짜서, 무늬가 안 맞는 마지막 이음매는 문 근처에 와요.']},
+ {id:'hang',tab:'tools',also:['3d'],title:'벽지 붙이기 · 전개도 · 재단표',steps:['<b>도구</b> 탭의 벽지 계산기에서 롤 규격과 무늬 반복 길이를 먼저 맞춰요.','<b>최소 사용</b>은 자투리를 최대한 다시 써서 롤을 아끼고, <b>깔끔하게</b>는 창문 가운데에 맞추고 좁은 조각을 없애요. 버튼에 두 방식의 롤 수가 같이 나와요.','<b>전개도</b>에서 벽마다 폭 번호, 이음매(빨간 선), 첫 수직선(파란 점선)을 봐요. 분홍 폭은 15cm보다 좁은 조각이에요.','<b>재단표</b>대로 롤마다 잘라서 뒷면에 번호를 적어두면 순서가 안 헷갈려요.','<b>붙이는 순서 보기</b>를 누르면 준비부터 마무리까지 9단계가 그림과 체크리스트로 나와요.','문 쪽 벽을 마지막에 붙이도록 순서를 짜서, 무늬가 안 맞는 마지막 이음매는 문 근처에 와요.','<b>자투리 활용(최소 사용)</b>: 벽 끝에서 잘라낸 남은 폭은 다음 벽 첫 폭으로, 문·창문 자리에서 오려낸 조각은 창 위·아래나 문 위로 써요. 전개도에서 노란 점선 칸이에요.','<b>스티커 벽지</b>는 계산기에서 "스티커·접착식"을 고르면 풀·초배지 없이 계산하고, 겹침 1cm와 붙이는 순서도 스티커용으로 바뀌어요.']},
  {id:'compare',tab:'tools',title:'배치안 비교',steps:['지금 배치를 <b>현재 배치 저장</b>으로 A안, B안처럼 저장해요.','가구를 바꿔 본 다음 다시 저장하면 여러 안이 생겨요.','표에서 점검 점수, 문제 수, 가장 좁은 통로, 콘센트 거리를 나란히 비교해요. 더 좋은 칸은 초록색이에요.','<b>이 안으로</b>를 누르면 그 배치로 돌아가요. 마음에 안 들면 ↶ 로 되돌려요.']},
  {id:'data',tab:'tools',title:'되돌리기 · 백업 · 다른 기기',steps:['↶ 되돌리기, ↷ 다시 실행으로 최근 30번까지 오갈 수 있어요.','모든 내용은 지금 쓰는 기기의 브라우저에 자동 저장돼요.','다른 기기로 옮기거나 백업하려면 <b>도구 → 데이터</b>에서 JSON을 복사해 두고, 새 기기에서 붙여넣어 불러와요.','사진을 많이 올리면 저장 공간이 부족할 수 있어요. 그때는 안 쓰는 사진을 지워주세요.']}
 ];
@@ -558,13 +559,13 @@ function renderCheckTab(){const r=R();const ch=runChecks(r);const sc=scoreOf(ch)
 }
 
 // ================= tools tab =================
-let calc={roll:'silk',rw:106,rl:15.6,rep:0,loss:10,walls:{N:true,E:true,S:true,W:true},sub:true,mode:'room',custom:[{l:300,h:240}]};
+let calc={roll:'silk',kind:'silk',ov:0,rw:106,rl:15.6,rep:0,loss:10,walls:{N:true,E:true,S:true,W:true},sub:true,mode:'room',custom:[{l:300,h:240}]};
 let fcalc={type:'maru',loss:10,tw:30,th:30,per:0,lw:180,area:null};
 function wallpaperCalc(){const r=R();let walls=[];
   if(calc.mode==='room')walls=Object.keys(WALLS).filter(k=>calc.walls[k]).map(k=>{const len=wallLen(r,k);const op=r.openings.filter(o=>o.wall===k&&(o.type==='door'||o.type==='slide'||o.type==='window'));return{name:WALLS[k],l:len,h:r.H,sub:op.reduce((a,o)=>a+o.w*(o.type==='window'?o.h:Math.min(o.h,r.H)),0)}});
   else walls=calc.custom.map((w,i)=>({name:'벽 '+(i+1),l:w.l,h:w.h,sub:0}));
   const rw=calc.rw,rl=calc.rl*100,rep=calc.rep;let strips=0,stripLen=0,area=0,subA=0;
-  walls.forEach(w=>{const s=Math.ceil(w.l/rw);strips+=s;let L=w.h+10;if(rep>0)L=Math.ceil(L/rep)*rep;stripLen=Math.max(stripLen,L);area+=w.l*w.h;subA+=w.sub});
+  walls.forEach(w=>{const s=Math.ceil(w.l/Math.max(5,rw-(calc.ov||0)));strips+=s;let L=w.h+10;if(rep>0)L=Math.ceil(L/rep)*rep;stripLen=Math.max(stripLen,L);area+=w.l*w.h;subA+=w.sub});
   if(!calc.sub)subA=0;const per=stripLen>0?Math.floor(rl/stripLen):0;
   const effStrips=Math.ceil(strips*(1-(area>0?subA/area:0))*(1+calc.loss/100));
   const rolls=per>0?Math.ceil(effStrips/per):Infinity;const areaRolls=Math.ceil(((area-subA)/(rw*rl))*(1+calc.loss/100)*10)/10;
@@ -577,7 +578,8 @@ function renderToolsTab(){const r=R();
   $('#main').innerHTML=`<div class="split"><div class="col">
   <div class="card" id="wpCard"><div class="ttl"><b>벽지 계산기</b><button class="how" data-guide="calc">사용법</button></div>
   <label class="f">롤 규격<select id="cRoll">${Object.entries(ROLLS).map(([k,v])=>`<option value="${k}" ${calc.roll===k?'selected':''}>${v.n}</option>`).join('')}</select></label>
-  <div class="g3"><label class="f">롤 폭(cm)<input id="cRw" inputmode="decimal" value="${calc.rw}"></label><label class="f">롤 길이(m)<input id="cRl" inputmode="decimal" value="${calc.rl}"></label><label class="f">무늬 반복(cm)<input id="cRep" inputmode="decimal" value="${calc.rep}" placeholder="무지 0"></label></div>
+  <div class="chips">${Object.entries(KINDS).map(([k,v])=>`<button class="chip ${calc.kind===k?'on':''}" data-kind="${k}">${v}</button>`).join('')}</div>
+  <div class="g4"><label class="f">롤 폭(cm)<input id="cRw" inputmode="decimal" value="${calc.rw}"></label><label class="f">롤 길이(m)<input id="cRl" inputmode="decimal" value="${calc.rl}"></label><label class="f">무늬 반복(cm)<input id="cRep" inputmode="decimal" value="${calc.rep}" placeholder="무지 0"></label><label class="f">이음매 겹침(cm)<input id="cOv" inputmode="decimal" value="${calc.ov}"></label></div>
   <div class="chips"><button class="chip ${calc.mode==='room'?'on':''}" data-cmode="room">${esc(r.name)} 벽</button><button class="chip ${calc.mode==='custom'?'on':''}" data-cmode="custom">직접 입력</button></div>
   ${calc.mode==='room'?`<div class="chips">${Object.entries(WALLS).map(([k,v])=>`<button class="chip ${calc.walls[k]?'on':''}" data-cw="${k}">${v} ${wallLen(r,k)}cm</button>`).join('')}</div><label class="row nw muted"><input type="checkbox" id="cSub" ${calc.sub?'checked':''} style="width:22px;height:22px"> 문·창문 면적 빼기</label>`
   :`<div id="cust">${calc.custom.map((w,i)=>`<div class="g3" style="margin-bottom:6px"><label class="f">벽 ${i+1} 길이<input data-cl="${i}" inputmode="decimal" value="${w.l}"></label><label class="f">높이<input data-ch="${i}" inputmode="decimal" value="${w.h}"></label><button class="btn sm danger" data-cdel="${i}" style="align-self:end">빼기</button></div>`).join('')}</div><button class="btn sm" id="cAdd">＋ 벽 추가</button>`}
@@ -596,7 +598,9 @@ function renderToolsTab(){const r=R();
   const upd=()=>{const c=wallpaperCalc();$('#cRes').innerHTML=isFinite(c.rolls)?`<span class="muted">필요한 벽지</span><span class="big">${c.rolls}롤</span><span class="muted">한 장(폭) 길이 ${c.stripLen}cm × ${c.effStrips}폭 · 한 롤에 ${c.per}폭 · 총 ${c.totalLen.toFixed(1)}m<br>바를 면적 ${c.area.toFixed(1)}㎡ · 면적으로만 보면 ${c.areaRolls}롤</span>`:'<span class="muted">롤 길이가 벽 높이보다 짧아요</span>';
     const f=floorCalc();$('#fRes').innerHTML=fcalc.type==='tile'?`<span class="muted">필요한 수량</span><span class="big">${f.count}장${f.boxes?` · ${f.boxes}박스`:''}</span><span class="muted">면적 ${f.area.toFixed(2)}㎡ · 로스 포함 ${f.need.toFixed(2)}㎡</span>`:fcalc.type==='lino'?`<span class="muted">필요한 장판</span><span class="big">${f.len}m</span><span class="muted">폭 ${fcalc.lw}cm로 ${f.strips}줄 · 면적 ${f.area.toFixed(2)}㎡</span>`:`<span class="muted">필요한 마루</span><span class="big">${f.need.toFixed(2)}㎡${f.boxes?` · ${f.boxes}박스`:''}</span><span class="muted">약 ${f.py.toFixed(1)}평 · 실제 면적 ${f.area.toFixed(2)}㎡ + 로스 ${fcalc.loss}%</span>`};
   upd();drawHang();
-  $('#cRoll').onchange=e=>{calc.roll=e.target.value;const v=ROLLS[calc.roll];if(calc.roll!=='custom'){calc.rw=v.w;calc.rl=v.l/100}render()};
+  $('#cRoll').onchange=e=>{calc.roll=e.target.value;const v=ROLLS[calc.roll];if(calc.roll!=='custom'){calc.rw=v.w;calc.rl=v.l/100;calc.kind=v.kind;calc.ov=v.ov}render()};
+  $$('[data-kind]').forEach(b=>b.onclick=()=>{calc.kind=b.dataset.kind;if(calc.kind==='silk')calc.ov=0;else if(!calc.ov)calc.ov=1;render()});
+  $('#cOv').oninput=e=>{calc.ov=clamp(num(e.target.value,0),0,10);upd();drawHang()};
   [['#cRw','rw'],['#cRl','rl'],['#cRep','rep'],['#cLoss','loss']].forEach(([id,k])=>$(id).oninput=e=>{calc[k]=Math.max(0,num(e.target.value,0));if(k==='rw'&&calc.rw<10)calc.rw=10;upd();drawHang()});
   $$('[data-cmode]').forEach(b=>b.onclick=()=>{calc.mode=b.dataset.cmode;render()});$$('[data-cw]').forEach(b=>b.onclick=()=>{calc.walls[b.dataset.cw]=!calc.walls[b.dataset.cw];render()});
   if($('#cSub'))$('#cSub').onchange=e=>{calc.sub=e.target.checked;upd()};
@@ -637,32 +641,41 @@ function drawCompare(){const r=R();const box=$('#cmpBox');if(!box)return;const c
 
 // ================= wallpaper hanging plan =================
 let wpMode='clean';
-function wpPlan(r,mode){const rw=Math.max(10,calc.rw),rl=Math.max(50,calc.rl*100),rp=calc.rep||0,H=r.H;const order0=['N','E','S','W'];
+function wpPlan(r,mode){const rw=Math.max(10,calc.rw),rl=Math.max(50,calc.rl*100),rp=calc.rep||0,H=r.H,ov=Math.min(calc.ov||0,rw/2),eff=rw-ov;const order0=['N','E','S','W'];
   const door=r.openings.find(o=>o.type==='door'||o.type==='slide');const di=door?order0.indexOf(door.wall):3;const order=[1,2,3,4].map(k=>order0[(di+k)%4]);
-  const roundL=L=>rp>0?Math.ceil(L/rp)*rp:L;const walls=[];const pieces=[];let no=0;const warn=[];
-  order.forEach((k,wi)=>{if(calc.mode==='room'&&!calc.walls[k])return;const len=wallLen(r,k);const tr=o=>(k==='N'||k==='E')?o.pos:len-o.pos-o.w;
+  const roundL=L=>rp>0?Math.ceil(L/rp)*rp:L;const walls=[];const pieces=[];let no=0;const warn=[];const offcuts=[];const reuse=[];const allowCut=mode==='min'||rp===0;let carry=null;
+  const useOff=(pw,pl,label)=>{let best=-1,ba=1e12;offcuts.forEach((o,i)=>{if(o.w>=pw-0.5&&o.L>=pl&&o.w*o.L<ba){ba=o.w*o.L;best=i}});if(best<0)return null;const o=offcuts[best];o.L-=pl;if(o.L<15)offcuts.splice(best,1);reuse.push({to:label,from:o.src,w:Math.round(pw),L:Math.round(pl)});return o.src};
+  order.forEach((k,wi)=>{if(calc.mode==='room'&&!calc.walls[k]){carry=null;return}const len=wallLen(r,k);const tr=o=>(k==='N'||k==='E')?o.pos:len-o.pos-o.w;
     const ops=r.openings.filter(o=>o.wall===k&&(o.type==='door'||o.type==='slide'||o.type==='window')).map(o=>({o,a:tr(o),b:tr(o)+o.w,z0:o.type==='window'?o.elev:0,z1:o.type==='window'?o.elev+o.h:Math.min(o.h,H)}));
-    const n0=Math.ceil(len/rw),last0=len-(n0-1)*rw;let f=rw;let why='모서리에서 바로 시작';
-    if(mode==='clean'){const win=ops.filter(x=>x.o.type==='window').sort((a,b)=>(b.b-b.a)-(a.b-a.a))[0];
-      if(win){const wc=(win.a+win.b)/2;f=((wc-rw/2)%rw+rw)%rw;if(f<15)f+=rw;why='창문 가운데에 폭 가운데를 맞춤'}
-      else if(n0>=2&&last0<rw*0.5){f=(last0+rw)/2;why='양 끝 폭을 같게 나눠 좁은 조각을 없앰'}}
-    f=Math.min(f,len);const xs=[0];let x=f;while(x<len-0.5){xs.push(x);x+=rw}xs.push(len);
-    const strips=[];for(let i=0;i<xs.length-1;i++){const x0=xs[i],x1=xs[i+1];no++;const st={no,x0,x1,w:x1-x0,parts:[]};
+    const n0=Math.ceil(len/eff),last0=len-(n0-1)*eff;let f=eff;let why='모서리에서 바로 시작';let fromCarry=false;
+    if(mode==='min'&&carry&&carry.w>=10){f=Math.min(carry.w,len);fromCarry=true;why=`앞 벽 끝에서 남은 ${Math.round(carry.w)}cm 조각으로 시작`}
+    else if(mode==='clean'){const win=ops.filter(x=>x.o.type==='window').sort((a,b)=>(b.b-b.a)-(a.b-a.a))[0];
+      if(win){const wc=(win.a+win.b)/2;f=((wc-eff/2)%eff+eff)%eff;if(f<15)f+=eff;why='창문 가운데에 폭 가운데를 맞춤'}
+      else if(n0>=2&&last0<eff*0.5){f=(last0+eff)/2;why='양 끝 폭을 같게 나눠 좁은 조각을 없앰'}}
+    f=Math.min(f,len);const mk=f0=>{const a=[0];let x=f0;while(x<len-0.5){a.push(x);x+=eff}a.push(len);return a};let xs=mk(f);
+    {const lw=xs[xs.length-1]-xs[xs.length-2];if(xs.length>=3&&lw<15){const nf=f-(15-lw);if(nf>=15){f=nf;xs=mk(f);why+=' · 끝에 좁은 조각이 안 남게 첫 폭을 줄임'}}}
+    const strips=[];for(let i=0;i<xs.length-1;i++){const x0=xs[i],x1=xs[i+1];no++;const w=x1-x0;const cutW=Math.min(rw,w+(i<xs.length-2?ov:0));const st={no,x0,x1,w,parts:[]};const lab=st.no+'번';
       const inside=ops.find(q=>x0>=q.a-0.5&&x1<=q.b+0.5);
       if(inside){if(H-inside.z1>1)st.parts.push({z0:inside.z1,z1:H,kind:inside.o.type==='window'?'창 위':'문 위'});if(inside.z0>1)st.parts.push({z0:0,z1:inside.z0,kind:'창 아래'})}
       else st.parts.push({z0:0,z1:H,kind:'전체'});
-      st.parts.forEach(pt=>{pt.L=roundL(pt.z1-pt.z0+10);pieces.push({label:st.no+'번'+(pt.kind==='전체'?'':'('+pt.kind+')'),L:pt.L,full:pt.kind==='전체',no:st.no})});
+      st.parts.forEach(pt=>{pt.L=roundL(pt.z1-pt.z0+10);const plab=lab+(pt.kind==='전체'?'':'('+pt.kind+')');
+        if(i===0&&fromCarry&&pt.kind==='전체'){pt.src=carry.src;reuse.push({to:plab,from:carry.src,w:Math.round(cutW),L:pt.L});return}
+        if(pt.kind!=='전체'&&allowCut){const src=useOff(cutW,pt.L,plab);if(src){pt.src=src;return}}
+        pieces.push({label:plab,L:pt.L,full:pt.kind==='전체',no:st.no})});
+      // cut-outs where a full strip passes over part of a door/window
+      if(!inside&&allowCut)ops.forEach(q=>{const ow=Math.min(x1,q.b)-Math.max(x0,q.a);if(ow>=10&&q.z1-q.z0>=30)offcuts.push({w:ow,L:q.z1-q.z0,src:`${lab} ${q.o.type==='window'?'창문':'문'} 자리에서 오려낸 조각`})});
       if(st.w<15&&st.w>0.5)warn.push(`${WALLS[k]} ${st.no}번 폭이 ${Math.round(st.w)}cm로 좁아요`);strips.push(st)}
+    const lastSt=strips[strips.length-1];const rem=rw-lastSt.w-1;carry=(strips.length>1||!fromCarry)&&rem>=10&&lastSt.parts[0]&&lastSt.parts[0].kind==='전체'?{w:rem,src:`${lastSt.no}번을 자르고 남은 ${Math.round(rem)}cm 폭`}:null;
+    if(carry&&allowCut&&mode!=='min')offcuts.push({w:carry.w,L:H+10,src:carry.src});
     walls.push({k,len,ops,strips,why,first:Math.round(f),order:wi})});
-  // pack into rolls
   const rolls=[];const put=pc=>{let rr=rolls.find(x=>x.left>=pc.L);if(!rr){rr={pieces:[],left:rl};rolls.push(rr)}rr.pieces.push(pc);rr.left-=pc.L};
   if(mode==='min'){[...pieces].sort((a,b)=>b.L-a.L).forEach(put)}
   else{let cur=null;pieces.filter(p=>p.full).forEach(pc=>{if(!cur||cur.left<pc.L){cur={pieces:[],left:rl};rolls.push(cur)}cur.pieces.push(pc);cur.left-=pc.L});pieces.filter(p=>!p.full).sort((a,b)=>b.L-a.L).forEach(put)}
-  const tooLong=pieces.some(p=>p.L>rl);return{walls,rolls,pieces,warn,tooLong,rw,rl,rp}}
+  const tooLong=pieces.some(p=>p.L>rl);return{walls,rolls,pieces,warn,tooLong,rw,rl,rp,reuse}}
 function wallSVG(r,w){const H=r.H,len=w.len,fs=Math.max(10,Math.min(len,H)*0.06);const cols=['#E8F0EB','#D6E5DC'];
   let s=`<svg viewBox="-6 ${-fs*1.8} ${len+12} ${H+fs*3.2}" style="width:100%;height:auto;display:block" role="img" aria-label="${WALLS[w.k]} 전개도: ${w.strips.length}폭">`;
   s+=`<rect x="0" y="0" width="${len}" height="${H}" fill="#fff" stroke="#1F2421" stroke-width="${fs*0.25}"/>`;
-  w.strips.forEach((st,i)=>{st.parts.forEach(pt=>{s+=`<rect x="${st.x0}" y="${H-pt.z1}" width="${st.w}" height="${pt.z1-pt.z0}" fill="${st.w<15?'#F8D3D3':cols[i%2]}"/>`})});
+  w.strips.forEach((st,i)=>{st.parts.forEach(pt=>{s+=`<rect x="${st.x0}" y="${H-pt.z1}" width="${st.w}" height="${pt.z1-pt.z0}" fill="${st.w<15?'#F8D3D3':pt.src?'#FFF4D1':cols[i%2]}" ${pt.src?`stroke="#C79A00" stroke-width="${fs*0.15}" stroke-dasharray="${fs*0.4} ${fs*0.25}"`:''}/>`})});
   w.ops.forEach(q=>{const c=q.o.type==='window'?'#CFE2EF':'#EFE7DA';s+=`<rect x="${q.a}" y="${H-q.z1}" width="${q.b-q.a}" height="${q.z1-q.z0}" fill="${c}" fill-opacity=".85" stroke="#8C7B5E" stroke-width="${fs*0.1}"/><text x="${(q.a+q.b)/2}" y="${H-q.z1+fs*1.1}" text-anchor="middle" font-size="${fs*0.8}" fill="#5E6660">${q.o.type==='window'?'창문':'문'}</text>`});
   w.strips.forEach((st,i)=>{
     s+=`<text x="${(st.x0+st.x1)/2}" y="${H*0.5}" text-anchor="middle" font-size="${Math.min(fs*1.3,st.w*0.8)}" font-weight="800" fill="#2E6B5E" paint-order="stroke" stroke="#fff" stroke-width="${fs*0.25}">${st.no}</text><text x="${(st.x0+st.x1)/2}" y="${H*0.5+fs*1.2}" text-anchor="middle" font-size="${Math.min(fs*0.8,st.w*0.35)}" fill="#5E6660">${Math.round(st.w)}</text>`;
@@ -680,16 +693,18 @@ const HANG_STEPS=[
  {t:'모서리 처리',d:'안쪽 모서리에서는 벽지를 <b>1~2cm만 넘겨 감고</b> 잘라요. 다음 벽은 남은 조각으로 시작하되, 다시 수직선을 긋고 그 선에 맞춰 붙여요.',svg:'<svg viewBox="0 0 300 120"><path d="M40 15 L150 35 L150 115 L40 95Z" fill="#fff" stroke="#1F2421"/><path d="M150 35 L260 15 L260 95 L150 115Z" fill="#F5F3EE" stroke="#1F2421"/><path d="M110 28 L150 35 L158 34 L158 114 L150 115 L110 108Z" fill="#DCE6DE"/><line x1="185" y1="25" x2="185" y2="110" stroke="#1F5F99" stroke-dasharray="5 3"/><text x="160" y="60" font-size="10">1~2cm</text></svg>'},
  {t:'창문 · 문 · 콘센트',d:'창틀·문틀 위에 그대로 덮어 붙인 뒤, 모서리에 <b>대각선 칼집</b>을 넣고 틀 선을 따라 잘라내요. 콘센트 자리는 X자로 칼집을 넣고 안쪽만 잘라요. 전개도에서 <b>창 위·창 아래·문 위</b> 조각은 남는 자투리로 써도 돼요.',svg:'<svg viewBox="0 0 300 120"><rect x="20" y="10" width="260" height="100" fill="#DCE6DE"/><rect x="90" y="30" width="110" height="60" fill="#CFE2EF" stroke="#8C7B5E"/><path d="M90 30 l-12 -12 M200 30 l12 -12 M90 90 l-12 12 M200 90 l12 12" stroke="#C62828" stroke-width="2"/><path d="M240 50 l16 16 M256 50 l-16 16" stroke="#C62828" stroke-width="2"/><text x="248" y="85" text-anchor="middle" font-size="10">콘센트 X</text></svg>'},
  {t:'마무리',d:'천장과 걸레받이 선에 헤라를 대고 칼로 남는 부분을 잘라요. <b>칼날은 자주 부러뜨려</b> 새 날로 써야 깨끗하게 잘려요. 충분히 마른 뒤 콘센트 커버를 다시 달고 차단기를 올려요.',svg:'<svg viewBox="0 0 300 120"><rect x="20" y="10" width="260" height="100" fill="#DCE6DE"/><rect x="20" y="96" width="260" height="14" fill="#E6DCC9"/><rect x="120" y="86" width="70" height="8" fill="#9AA19C"/><path d="M195 88 l30 -6" stroke="#1F2421" stroke-width="3"/><text x="150" y="40" text-anchor="middle" font-size="11">헤라 대고 자르기</text></svg>'}];
-function hangSheet(){const r=R();S.hangDone=S.hangDone||{};const done=new Set(S.hangDone[r.id]||[]);
-  openSheetUI(`<h2>벽지 붙이는 순서</h2><p class="muted" style="margin:0">${esc(r.name)} 기준이에요. 끝낸 단계는 체크해 두세요.</p>${HANG_STEPS.map((h,i)=>`<div class="card" style="border:1px solid var(--soft)"><label class="row nw" style="gap:10px"><input type="checkbox" data-hd="${i}" ${done.has(i)?'checked':''} style="width:24px;height:24px;flex-shrink:0"><b style="font-size:16px">${i+1}. ${h.t}</b></label><div style="background:#F5F3EE;border-radius:12px;padding:6px">${h.svg.replace('<svg ','<svg style="width:100%;height:auto;display:block" role="img" aria-label="'+h.t+' 그림" ')}</div><p style="margin:0;font-size:14px;line-height:1.6">${h.d}</p></div>`).join('')}<button class="btn pri" id="hgClose">닫기</button>`);
+const STICKER_STEPS={0:{t:'준비하기',d:'스티커 벽지는 풀이 필요 없지만 <b>벽면이 매끈하고 깨끗해야</b> 잘 붙어요. 콘센트·스위치 커버를 떼고(차단기 내리기), 먼지·기름때를 닦고 완전히 말려요. 곰팡이·습기 있는 벽, 오래된 실크 벽지 위는 잘 떨어질 수 있어요.'},3:{t:'뒷지 조금씩 떼며 붙이기',d:'뒷지를 한 번에 다 떼지 말고 <b>위에서 10~20cm만</b> 떼서 수직선에 맞춰 붙여요. 맞으면 뒷지를 조금씩 내리면서 펠트 헤라로 가운데→바깥으로 밀어요. 비뚤어지면 바로 살살 떼서 다시 붙여요.'},4:{t:'기포 빼기',d:'붙이면서 생긴 기포는 헤라로 바깥쪽으로 밀어내요. 안 빠지는 작은 기포는 <b>핀으로 살짝 찔러</b> 공기를 빼고 눌러요.'},5:{t:'이음매 맞추기',d:'스티커 벽지는 마르면서 줄어드는 경우가 있어서 보통 <b>1cm 안팎 겹쳐</b> 붙여요. 무늬가 있으면 무늬를 맞춘 위치에서 겹쳐요. 겹친 부분은 헤라로 꾹 눌러요.'},6:{t:'모서리 처리',d:'안쪽 모서리는 1~2cm 넘겨 감고, 잘 안 붙으면 <b>드라이어로 살짝 데워</b> 눌러요. 다음 벽은 남은 조각(자투리)으로 시작하되 다시 수직선에 맞춰요.'}};
+function hangSheet(){const r=R();S.hangDone=S.hangDone||{};const steps=HANG_STEPS.map((h,i)=>calc.kind==='sticker'&&STICKER_STEPS[i]?Object.assign({},h,STICKER_STEPS[i]):h);const done=new Set(S.hangDone[r.id]||[]);
+  openSheetUI(`<h2>벽지 붙이는 순서 · ${KINDS[calc.kind]}</h2><p class="muted" style="margin:0">${esc(r.name)} 기준이에요. 끝낸 단계는 체크해 두세요.</p>${steps.map((h,i)=>`<div class="card" style="border:1px solid var(--soft)"><label class="row nw" style="gap:10px"><input type="checkbox" data-hd="${i}" ${done.has(i)?'checked':''} style="width:24px;height:24px;flex-shrink:0"><b style="font-size:16px">${i+1}. ${h.t}</b></label><div style="background:#F5F3EE;border-radius:12px;padding:6px">${h.svg.replace('<svg ','<svg style="width:100%;height:auto;display:block" role="img" aria-label="'+h.t+' 그림" ')}</div><p style="margin:0;font-size:14px;line-height:1.6">${h.d}</p></div>`).join('')}<button class="btn pri" id="hgClose">닫기</button>`);
   $$('[data-hd]').forEach(c=>c.onchange=()=>{const i=+c.dataset.hd;c.checked?done.add(i):done.delete(i);S.hangDone[r.id]=[...done];save()});$('#hgClose').onclick=closeSheet}
-function drawHang(){const box=$('#hangBox');if(!box)return;const r=R();const P=wpPlan(r,wpMode),Pm=wpPlan(r,'min'),Pc=wpPlan(r,'clean');const silk=calc.roll==='silk';const area=wallpaperCalc().area;
+function drawHang(){const box=$('#hangBox');if(!box)return;const r=R();const P=wpPlan(r,wpMode),Pm=wpPlan(r,'min'),Pc=wpPlan(r,'clean');const silk=calc.kind==='silk',stk=calc.kind==='sticker';const area=wallpaperCalc().area;
   box.innerHTML=`<div class="chips"><button class="chip ${wpMode==='min'?'on':''}" data-wm="min">최소 사용 ${Pm.rolls.length}롤</button><button class="chip ${wpMode==='clean'?'on':''}" data-wm="clean">깔끔하게 ${Pc.rolls.length}롤</button></div>
-  <p class="muted" style="margin:0">${wpMode==='min'?'모서리에서 바로 시작하고, 창 위·아래와 문 위 조각을 남는 자투리로 최대한 채워요.':'창문 가운데에 폭을 맞추고, 좁은 조각이 생기지 않게 시작점을 옮겨요. 무늬가 이어지도록 전체 폭은 롤 순서대로 잘라요.'} 문 쪽 벽을 마지막에 붙여서, 무늬가 안 맞는 마지막 이음매가 문 근처로 가게 했어요.</p>
+  <p class="muted" style="margin:0">${wpMode==='min'?'벽 끝에서 잘라낸 남은 폭을 다음 벽 첫 폭으로 이어 쓰고, 문·창문 자리에서 오려낸 조각과 롤 끝 자투리로 창 위·아래, 문 위를 채워요.':'창문 가운데에 폭을 맞추고, 좁은 조각이 생기지 않게 시작점을 옮겨요. 무늬가 이어지도록 전체 폭은 롤 순서대로 잘라요.'} 문 쪽 벽을 마지막에 붙여서, 무늬가 안 맞는 마지막 이음매가 문 근처로 가게 했어요.</p>
   ${P.tooLong?'<div class="w bad">한 폭 길이가 롤 길이보다 길어요. 롤 규격을 확인하세요.</div>':''}${P.warn.map(m=>`<div class="w bad">⚠︎ ${m}</div>`).join('')}
   ${P.walls.map((w,i)=>`<div style="border:1px solid var(--soft);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:4px"><div class="row nw"><b class="grow">${i+1}번째 · ${WALLS[w.k]}</b><span class="tag">${w.strips.length}폭</span></div><span class="muted">${w.why} · 첫 폭 ${w.first}cm</span>${wallSVG(r,w)}</div>`).join('')}
+  ${P.reuse.length?`<b>자투리로 채우는 곳 · ${P.reuse.length}곳</b><p class="muted" style="margin:0">전개도의 노란 점선 칸이에요. 새로 자르지 않고 남은 조각을 써요.</p><div class="list">${P.reuse.map(u=>`<div class="it"><span class="t"><b>${u.to} · ${u.w}×${u.L}cm</b><span class="muted">← ${u.from}</span></span></div>`).join('')}</div>`:''}
   <b>재단표</b><div class="list">${P.rolls.map((rr,i)=>`<div class="it"><span class="t"><b>${i+1}번 롤</b><span class="muted">${rr.pieces.map(pc=>pc.label+' '+pc.L+'cm').join(' · ')}</span></span><span class="muted" style="flex-shrink:0">남음 ${Math.max(0,Math.round(rr.left))}cm</span></div>`).join('')}</div>
-  <div class="result"><span class="muted">구매 목록</span><span class="big">${P.rolls.length+1}롤</span><span class="muted">필요 ${P.rolls.length}롤 + 예비 1롤 (같은 로트 번호로)<br>${silk?`초배지 약 ${area.toFixed(1)}㎡ · `:''}벽지 풀 (롤 수에 맞춰 판매처 권장량) · 칼과 여분 칼날 · 헤라 · 솔 · 이음매 롤러 · 줄자 · 수평기나 다림추 · 스펀지 · 사다리</span></div>
+  <div class="result"><span class="muted">구매 목록</span><span class="big">${P.rolls.length+1}롤</span><span class="muted">필요 ${P.rolls.length}롤 + 예비 1롤 (같은 로트 번호로)<br>${stk?'펠트 헤라(스크래치 방지) · 커터칼과 여분 칼날 · 쇠자 · 드라이어 · 핀(기포 빼기용) · 줄자 · 수평기나 다림추 · 마른 천 · 사다리':`${silk?`초배지 약 ${area.toFixed(1)}㎡ · `:''}벽지 풀 (롤 수에 맞춰 판매처 권장량) · 칼과 여분 칼날 · 헤라 · 솔 · 이음매 롤러 · 줄자 · 수평기나 다림추 · 스펀지 · 사다리`}</span></div>
   <button class="btn pri" id="hangGo">📋 붙이는 순서 보기 (그림 9단계)</button>`;
   $$('[data-wm]').forEach(b=>b.onclick=()=>{wpMode=b.dataset.wm;drawHang()});$('#hangGo').onclick=hangSheet}
 
